@@ -1,14 +1,26 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription, conditions
-from launch.substitutions import Command, LaunchConfiguration
-from launch.actions import DeclareLaunchArgument, ExecuteProcess
+from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, SetEnvironmentVariable
 from launch_ros.actions import Node
 
 output_dest = "log"
 
 def generate_launch_description():
   pkg_traethlin_description = get_package_share_directory('traethlin_description')
+
+  pkg_install_path = get_package_share_directory('traethlin_description')
+  if 'GAZEBO_MODEL_PATH' in os.environ:
+      model_path =  os.environ['GAZEBO_MODEL_PATH'] + ':' + pkg_install_path
+  else:
+      model_path =  pkg_install_path
+#  print("------------------------------", model_path)
+  if 'GAZEBO_RESOURCE_PATH' in os.environ:
+      resource_path =  os.environ['GAZEBO_RESOURCE_PATH'] + ':' + pkg_install_path
+  else:
+      resource_path =  pkg_install_path
+#  print("------------------", resource_path);
 
   traethlin_urdf = Command(['xacro', ' ', os.path.join(pkg_traethlin_description,
                                                       'urdf',
@@ -21,8 +33,13 @@ def generate_launch_description():
     default_value='traethlin'
   )
 
-  world_file_name = 'traethlin.world'
-  world = os.path.join(pkg_traethlin_description, 'worlds', world_file_name)
+  world_file_name = LaunchConfiguration('world')
+  world_launch_arg = DeclareLaunchArgument(
+    'world',
+    default_value='traethlin.world'
+  )
+
+  world = PathJoinSubstitution(['worlds', world_file_name])
 
   robot_state_publisher = Node(
     package='robot_state_publisher',
@@ -50,9 +67,14 @@ def generate_launch_description():
 
   return LaunchDescription([
     namespace_launch_arg,
+    world_launch_arg,
+
+    SetEnvironmentVariable(name='GAZEBO_MODEL_PATH', value=model_path),
+    SetEnvironmentVariable(name='GAZEBO_RESOURCE_PATH', value=resource_path),
 
     ExecuteProcess(
-            cmd=['gazebo', '--verbose', world, '-s', 'libgazebo_ros_factory.so'],
+            cmd=['gazebo', '--verbose', world,
+                 '-s', 'libgazebo_ros_factory.so'],
             output='screen'),
 
     robot_state_publisher,
