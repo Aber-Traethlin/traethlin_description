@@ -13,11 +13,17 @@ def generate_launch_description():
   traethlin_urdf = Command(['xacro', ' ', os.path.join(pkg_traethlin_description,
                                                       'urdf',
                                                       'traethlin.urdf.xacro')])
+  namespace_ = LaunchConfiguration('namespace')
+  namespace_launch_arg = DeclareLaunchArgument(
+    'namespace',
+    default_value='traethlin'
+  )
 
   robot_state_publisher = Node(
     package='robot_state_publisher',
     executable='robot_state_publisher',
     name='robot_state_publisher',
+    namespace=namespace_,
     parameters=[{
       'robot_description': traethlin_urdf
       }],
@@ -31,12 +37,15 @@ def generate_launch_description():
     package='joint_state_publisher',
     name='joint_state_publisher',
     executable='joint_state_publisher',
+    namespace=namespace_,
     output={"both": output_dest},
     arguments=['--ros-args', '--log-level', 'DEBUG'],
     respawn=True
     )
 
   return LaunchDescription([
+    namespace_launch_arg,
+
     robot_state_publisher,
     joint_state_publisher,
   ])
