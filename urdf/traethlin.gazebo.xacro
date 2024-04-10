@@ -45,7 +45,7 @@ material.
   </gazebo>
 
   <gazebo reference="gps_link">
-    <sensor name="my_gps" type="gps">
+    <sensor name="gps" type="gps">
       <always_on>true</always_on>
       <update_rate>5</update_rate>
       <gps>
@@ -64,10 +64,11 @@ material.
           </vertical>
         </position_sensing>
       </gps>
-      <plugin name="my_gps_plugin" filename="libgazebo_ros_gps_sensor.so">
+      <plugin name="gps_plugin" filename="libgazebo_ros_gps_sensor.so">
         <ros>
           <!-- <namespace>/traethlin</namespace> -->
           <remapping>~/out:=gps/fix</remapping>
+          <remapping>~/vel:=gps/vel</remapping>
           <frame_name>imu_link</frame_name>
         </ros>
       </plugin>
