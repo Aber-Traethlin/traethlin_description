@@ -121,7 +121,7 @@ material.
           </z>
         </linear_acceleration>
       </imu>
-      <plugin name="my_imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+      <plugin name="my_imu" filename="libgazebo_ros_imu_sensor.so">
         <ros>
           <!-- <namespace>/traethlin</namespace> -->
           <remapping>~/out:=imu</remapping>
