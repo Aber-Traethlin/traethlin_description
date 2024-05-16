@@ -29,12 +29,15 @@ material.
         </distortion>
       </camera>-->
       <plugin name="depth_camera" filename="libgazebo_ros_camera.so">
-        <!-- <ros>
-          <namespace>traethlin</namespace>
-        </ros> -->
+        <ros>
+          <remapping>/camera/image_raw:=/camera/rgb/image_raw</remapping>
+          <remapping>/camera/image_raw/compressed:=/camera/rgb/image_raw/compressed</remapping>
+          <remapping>/camera/image_raw/compressedDepth:=/camera/rgb/image_raw/compressedDepth</remapping>
+          <remapping>/camera/image_raw/theora:=/camera/rgb/image_raw/theora</remapping>
+          <remapping>/camera/camera_info:=/camera/rgb/camera_info</remapping>
+          <remapping>/camera/points:=/camera/depth/points</remapping>
+        </ros>
         <camera_name>camera</camera_name>
-        <image_topic_name>color/image_raw</image_topic_name>
-        <camera_info_topic_name>color/camera_info</camera_info_topic_name>
         <frame_name>camera_depth_optical_frame</frame_name>
         <hack_baseline>0.095</hack_baseline>
         <min_depth>0.04</min_depth>
@@ -76,7 +79,7 @@ material.
   </gazebo>
 
   <gazebo reference="imu_link">
-    <sensor name="my_imu" type="imu">
+    <sensor name="imu" type="imu">
       <always_on>true</always_on>
       <update_rate>10</update_rate>
       <imu>
@@ -121,10 +124,10 @@ material.
           </z>
         </linear_acceleration>
       </imu>
-      <plugin name="my_imu" filename="libgazebo_ros_imu_sensor.so">
+      <plugin name="imu" filename="libgazebo_ros_imu_sensor.so">
         <ros>
           <!-- <namespace>/traethlin</namespace> -->
-          <remapping>~/out:=imu</remapping>
+          <remapping>~/out:=imu/data</remapping>
           <initial_orientation_as_reference>false</initial_orientation_as_reference>
           <frame_name>imu_link</frame_name>
         </ros>
@@ -146,9 +149,10 @@ material.
       <plugin name="thermal_camera" filename="libgazebo_ros_camera.so">
         <ros>
           <!-- <namespace>traethlin</namespace> -->
-          <remapping>~/image_raw:=thermal_image</remapping>
+<!--          <remapping>~/image_raw:=thermal_image</remapping>
           <remapping>~/camera_info:=thermal_info</remapping>
-        </ros>
+          -->
+          </ros>
 
         <frame_name>thermal_link</frame_name>
 
