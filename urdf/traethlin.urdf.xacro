@@ -148,14 +148,31 @@ material.
     <child link="chassis_link"/>
   </joint>
 
-  <link name="imu_link">
+  <!-- Box of goodies! -->
+  <link name="box_of_goodies_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.15 0.15 0.07"/>
+      </geometry>
+      <material name="lightgrey"/>
+    </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.01 0.01 0.01"/>
+        <box size="0.15 0.15 0.07"/>
       </geometry>
     </collision>
+    <xacro:null_inertial/>
+  </link>
 
+  <joint name="box_of_goodies_to_chassis_joint" type="fixed">
+    <origin xyz="-0.10 0 0.10" rpy="0 0 0"/>
+    <parent link="chassis_link"/>
+    <child link="box_of_goodies_link"/>
+  </joint>
+
+  <link name="imu_link">
     <xacro:null_inertial/>
   </link>
 
@@ -170,9 +187,16 @@ material.
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.01 0.01 0.01"/>
+        <cylinder radius="0.015" length="0.01"/>
       </geometry>
     </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.015" length="0.01"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
 
     <xacro:null_inertial/>
   </link>
@@ -247,64 +271,6 @@ material.
     </visual>
     <xacro:null_inertial/>
   </link>
-
-<!--
-  <joint name="side_camera_joint" type="fixed">
-    <axis xyz="0 1 0" />
-    <origin xyz="0 -3 0" rpy="0 0 1.5708"/>
-    <parent link="base_link"/>
-    <child link="side_camera_base"/>
-  </joint>-->
-
-  <!-- Camera -->
-  <!--<link name="side_camera_base">-->
-    <!-- <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.05 0.05 0.05"/>
-      </geometry>
-    </collision>
-
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.05 0.05 0.05"/>
-      </geometry>
-      <material name="red"/>
-    </visual>
-    -->
-    <!--<inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>-->
-  <!--
-  <link name="odom">
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-  </collision>
-    </link>
-  <joint name="odom_joint" type="fixed">
-    <axis xyz="0 0 0" />
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <parent link="odom"/>
-    <child link="base_link"/>
-  </joint>-->
-
-  <!--
-  <link name="lidar">
-    <xacro:null_inertial/>
-  </link>
-  <joint name="lidar_joint" type="fixed">
-    <origin xyz="0 0 0.1" rpy="0 0 0"/>
-    <parent link="chassis"/>
-    <child link="lidar"/>
-  </joint>
--->
 
   <!-- Wheels -->
   <xacro:front_wheel lr_prefix="left" fr_prefix="front"
