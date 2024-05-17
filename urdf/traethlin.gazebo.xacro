@@ -125,11 +125,11 @@ material.
           </z>
         </linear_acceleration>
       </imu>
+      <initial_orientation_as_reference>false</initial_orientation_as_reference>
       <plugin name="imu" filename="libgazebo_ros_imu_sensor.so">
         <ros>
           <!-- <namespace>/traethlin</namespace> -->
           <remapping>~/out:=imu/data</remapping>
-          <initial_orientation_as_reference>false</initial_orientation_as_reference>
           <frame_name>imu_link</frame_name>
         </ros>
       </plugin>
