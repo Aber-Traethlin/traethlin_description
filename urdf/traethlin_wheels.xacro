@@ -73,6 +73,7 @@ material.
         <!-- <geometry>
           <cylinder radius="${tire_dia/2}" length="${rear_tire_width*0.1}"/>
         </geometry> -->
+        <material name="black"/>
       </visual>
 
       <!--<collision name="collision">
@@ -105,6 +106,7 @@ material.
     </link>
 
     <gazebo reference="${lr_prefix}_${fr_prefix}_wheel">
+      <material>Gazebo/Black</material>
       <mu1>10</mu1>
       <mu2>10</mu2>
     </gazebo>

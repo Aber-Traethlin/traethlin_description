@@ -20,11 +20,20 @@ material.
   <xacro:include filename="$(find traethlin_description)/urdf/traethlin_wheels.xacro" />
   <xacro:include filename="$(find traethlin_description)/urdf/traethlin.gazebo.xacro" />
 
+  <material name="black">
+    <color rgba="0.0 0.0 0.0 1"/>
+  </material>
   <material name="chassis_mat">
     <color rgba="0.2 0.2 0.2 1"/>
   </material>
   <material name="lightgrey">
     <color rgba="0.8 0.8 0.8 1"/>
+  </material>
+  <material name="orange">
+    <color rgba="1.0 0.5 0.05 1"/>
+  </material>
+  <material name="off_white">
+    <color rgba="0.9 0.9 0.5 1"/>
   </material>
 
   <!-- Null inertial element. This is needed to make the model work with
@@ -88,15 +97,7 @@ material.
     </inertial>
   </xacro:macro>
 
-  <!-- base_link must have geometry so that its axes can be displayed in
-       rviz. -->
   <link name="base_link">
-<!--    <visual>
-      <geometry>
-        <box size="0.01 0.01 0.01"/>
-      </geometry>
-      <material name="chassis_mat"/>
-    </visual>-->
   </link>
 
   <gazebo reference="base_link">
@@ -106,8 +107,6 @@ material.
   <!-- Chassis -->
   <link name="chassis_link">
     <visual>
-      <!--<origin xyz="${-chassis_length/2 + 0.15} 0 ${-chassis_cm_height}"
-              rpy="0 0 0"/>-->
       <origin xyz="${chassis_length_offset} 0 ${chassis_vertical_offset}"
               rpy="0 0 0"/>
 
@@ -138,6 +137,7 @@ material.
       mass="${chassis_mass}"/>
   </link>
   <gazebo reference="chassis_link">
+    <material>Gazebo/DarkGrey</material>
     <mu1>0.2</mu1>
     <mu2>0.2</mu2>
   </gazebo>
@@ -189,7 +189,7 @@ material.
       <geometry>
         <mesh filename="file://$(find traethlin_description)/meshes/camera_assembly.stl" scale="0.001 0.001 0.001" />
       </geometry>
-      <material name="lightgrey"/>
+      <material name="orange"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -200,6 +200,9 @@ material.
 
     <xacro:null_inertial/>
   </link>
+  <gazebo reference="cam_mount_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
 
   <joint name="cam_mount_joint" type="fixed">
     <origin xyz="-0.19 0 0.04" rpy="0 0 0"/>
@@ -216,52 +219,33 @@ material.
 
   <!-- Camera -->
   <link name="camera_base">
-    <!--<collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-    <box size="0.03 0.12 0.03"/>
-      </geometry>
-      <material name="lightgrey"/>
-    </collision>
-
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.03 0.12 0.03"/>
-      </geometry>
-      <material name="lightgrey"/>
-    </visual>-->
 
     <xacro:null_inertial/>
 
   </link>
 
   <joint name="thermal_joint" type="fixed">
-    <origin xyz="0.20 0 0.07" rpy="0 0 0"/>
+    <origin xyz="0.18 0 0.06" rpy="0 0.1 0"/>
     <parent link="chassis_link"/>
     <child link="thermal_link"/>
   </joint>
 
   <!-- Thermal Camera -->
   <link name="thermal_link">
-    <!--<collision>
+    <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-    <box size="0.03 0.12 0.03"/>
+        <box size="0.01 0.04 0.04"/>
       </geometry>
-      <material name="lightgrey"/>
     </collision>
-
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.03 0.12 0.03"/>
+        <box size="0.01 0.04 0.04"/>
       </geometry>
-      <material name="lightgrey"/>
-    </visual>-->
-
+      <material name="off_white"/>
+    </visual>
     <xacro:null_inertial/>
-
   </link>
 
 <!--
