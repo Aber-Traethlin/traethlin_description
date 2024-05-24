@@ -57,7 +57,7 @@ material.
 
 
   <xacro:property name="hub_dia" value="0.015"/>
-  <xacro:property name="tire_dia" value="0.125"/>
+  <xacro:property name="tire_dia" value="0.110"/>
   <!-- <xacro:property name="hex_hub_depth" value="0.0"/>  -->
   <xacro:property name="front_tire_width" value="0.07"/>
   <xacro:property name="front_wheel_mass" value="0.115"/><!--0.115-->
@@ -72,9 +72,9 @@ material.
   <xacro:property name="hex_hub_dist" value="0.4"/>-->
 
   <!-- The sum of the two wheelbases, front and rear, is the actual wheelbase  -->
-  <xacro:property name="wheelbase_front" value="0.312"/>
-  <xacro:property name="wheelbase_rear" value="0.312"/>
-  <xacro:property name="hex_hub_dist" value="0.22"/>
+  <xacro:property name="wheelbase_front" value="0.155"/>
+  <xacro:property name="wheelbase_rear" value="0.155"/>
+  <xacro:property name="hex_hub_dist" value="0.24"/>
 
 
 

@@ -26,7 +26,7 @@ material.
         ${lr_reflect * ((hex_hub_dist / 2) - 0.01)}
       ${-chassis_cm_height + front_shock_z_offset/2}"/>-->
       <origin xyz="${fr_reflect * chassis_cm_to_front_shock}
-                   ${lr_reflect * ((hex_hub_dist / 2) - 0.01)}
+                   ${lr_reflect * ((hex_hub_dist / 2) - 0.005)}
                    ${-front_shock_z_offset}"/>
       <axis xyz="0 0 -1"/>
       <limit lower="${-front_wheel_travel / 2}" upper="${front_wheel_travel / 2}"
@@ -54,12 +54,12 @@ material.
       <parent link="chassis_link"/>
       <child link="${child}"/>
 
-      <!-- ${lr_reflect * ((hex_hub_dist / 2) + lr_reflect*(front_tire_width / 2))} -->
+      <!-- ${lr_reflect * ((hex_hub_dist / 2) + lr_reflect*(tire_width / 2))} -->
       <!--<origin xyz="${fr_reflect * chassis_cm_to_rear_shock}
                    ${lr_reflect * ((hex_hub_dist / 2) )}
       ${-chassis_height/2 + rear_shock_z_offset/2}"/>-->
       <origin xyz="${fr_reflect * chassis_cm_to_rear_shock}
-                   ${lr_reflect * ((hex_hub_dist / 2) - 0.01)}
+                   ${lr_reflect * ((hex_hub_dist / 2) - 0.005)}
                    ${-rear_shock_z_offset}"/>>
         <!-- rpy="0 0 ${lr_reflect*degrees_180}"/> -->
       <axis xyz="0 0 -1"/>

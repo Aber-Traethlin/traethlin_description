@@ -30,12 +30,16 @@ material.
       </camera>-->
       <plugin name="depth_camera" filename="libgazebo_ros_camera.so">
         <ros>
-          <remapping>/camera/image_raw:=/camera/rgb/image_raw</remapping>
-          <remapping>/camera/image_raw/compressed:=/camera/rgb/image_raw/compressed</remapping>
-          <remapping>/camera/image_raw/compressedDepth:=/camera/rgb/image_raw/compressedDepth</remapping>
-          <remapping>/camera/image_raw/theora:=/camera/rgb/image_raw/theora</remapping>
-          <remapping>/camera/camera_info:=/camera/rgb/camera_info</remapping>
+          <remapping>/camera/image_raw:=/camera/color/image_raw</remapping>
+          <remapping>/camera/image_raw/compressed:=/camera/color/image_raw/compressed</remapping>
+          <remapping>/camera/image_raw/compressedDepth:=/camera/color/image_raw/compressedDepth</remapping>
+          <remapping>/camera/image_raw/theora:=/camera/color/image_raw/theora</remapping>
+          <remapping>/camera/camera_info:=/camera/color/camera_info</remapping>
           <remapping>/camera/points:=/camera/depth/points</remapping>
+          <remapping>/camera/depth/image_raw:=/camera/depth/image_rect_raw</remapping>
+          <remapping>/camera/depth/image_raw/compressed:=/camera/depth/image_rect_raw/compressed</remapping>
+          <remapping>/camera/depth/image_raw/compressedDepth:=/camera/depth/image_rect_raw/compressedDepth</remapping>
+          <remapping>/camera/depth/image_raw/theora:=/camera/depth/image_rect_raw/theora</remapping>
         </ros>
         <camera_name>camera</camera_name>
         <frame_name>camera_depth_optical_frame</frame_name>
@@ -82,7 +86,7 @@ material.
   <gazebo reference="imu_link">
     <sensor name="imu" type="imu">
       <always_on>true</always_on>
-      <update_rate>10</update_rate>
+      <update_rate>100</update_rate>
       <imu>
         <angular_velocity>
           <x>

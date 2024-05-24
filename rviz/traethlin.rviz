@@ -4,6 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /Point cloud1/Status1
         - /Imu1/Axes properties1
       Splitter Ratio: 0.4316037595272064
     Tree Height: 246
@@ -24,7 +25,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: Point cloud
 Visualization Manager:
   Class: ""
   Displays:
@@ -367,7 +368,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /traethlin/camera/depth/color/points
+        Value: /traethlin/camera/points
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -502,10 +503,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.16539883613586426
+      Pitch: 0.2753986418247223
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.930398464202881
+      Yaw: 3.845397472381592
     Saved: ~
 Window Geometry:
   Depth image:

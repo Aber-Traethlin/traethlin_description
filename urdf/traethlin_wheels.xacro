@@ -67,26 +67,20 @@ material.
     <link name="${lr_prefix}_${fr_prefix}_wheel">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
+<!--
         <geometry>
           <mesh filename="${wheel_model}" scale="0.001 0.001 0.001"/>
         </geometry>
-        <!-- <geometry>
-          <cylinder radius="${tire_dia/2}" length="${rear_tire_width*0.1}"/>
-        </geometry> -->
+-->
+        <geometry>
+          <cylinder radius="${tire_dia/2}" length="${tire_width}"/>
+        </geometry>
         <material name="black"/>
       </visual>
-
-      <!--<collision name="collision">
-        <origin xyz="0 0 0" rpy="${degrees_90} 0 0"/>
-        <geometry>
-          <mesh filename="${wheel_model}" scale="0.632 0.632 0.661"/>
-        </geometry>
-      </collision>-->
       <collision name="collision">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="${tire_dia/2}" length="${rear_tire_width*0.1}"/>
-          <!-- <mesh filename="${wheel_model}" scale="1 1 1"/> -->
+          <cylinder radius="${tire_dia/2}" length="${tire_width}"/>
         </geometry>
       </collision>
 
