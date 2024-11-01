@@ -15,6 +15,10 @@ must have a collision element. Furthermore, the link must have a Gazebo
 material.
 -->
 <robot name="traethlin" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="camera_type" default="oak-d-s2" />
+  <!-- Possible values are 'oak-d-s2' or 'd455' -->
+
   <xacro:include filename="$(find traethlin_description)/urdf/traethlin_constants.xacro" />
   <xacro:include filename="$(find traethlin_description)/urdf/traethlin_shock_absorbers.xacro" />
   <xacro:include filename="$(find traethlin_description)/urdf/traethlin_wheels.xacro" />
@@ -221,9 +225,9 @@ material.
         <mesh filename="file://$(find traethlin_description)/meshes/camera_assembly.stl" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
-
     <xacro:null_inertial/>
   </link>
+
   <gazebo reference="cam_mount_link">
     <material>Gazebo/Orange</material>
   </gazebo>
@@ -232,21 +236,53 @@ material.
     <origin xyz="-0.206 0 0.04" rpy="0 0 0"/>
     <parent link="chassis_link"/>
     <child link="cam_mount_link"/>
-
   </joint>
 
-  <joint name="camera_base_joint" type="fixed">
-    <origin xyz="0.035 0 0.355" rpy="0 0.36 0"/>
-    <parent link="cam_mount_link"/>
-    <child link="camera_base"/>
-  </joint>
+  <xacro:property name="cmp_camera_type" value="$(arg camera_type)"/>
 
-  <!-- Camera -->
-  <link name="camera_base">
+  <!-- realsense d455 camera -->
+  <xacro:if value="${cmp_camera_type == 'd455'}">
+    <link name="camera_base">
+      <xacro:null_inertial/>
+    </link>
+    <xacro:arg name="use_nominal_extrinsics" default="true"/>
+    <xacro:include
+      filename="$(find realsense2_description)/urdf/_d455.urdf.xacro" />
 
-    <xacro:null_inertial/>
+    <xacro:sensor_d455 parent="camera_base"
+                       use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:sensor_d455>
 
-  </link>
+    <joint name="camera_base_joint" type="fixed">
+      <origin xyz="0.03 0 0.358" rpy="0 0.36 0"/>
+      <parent link="cam_mount_link"/>
+      <child link="camera_base"/>
+    </joint>
+  </xacro:if>
+
+  <!-- oak-d camera -->
+  <xacro:if value="${cmp_camera_type == 'oak-d-s2'}">
+    <xacro:arg name="camera_name"   default="camera" />
+    <xacro:arg name="camera_model"  default="OAK-D-S2" />
+    <xacro:arg name="base_frame"    default="oak-d_frame" />
+    <xacro:arg name="parent_frame"  default="camera_base" />
+    <xacro:arg name="cam_pos_x"     default="0.0" />
+    <xacro:arg name="cam_pos_y"     default="0.0" />
+    <xacro:arg name="cam_pos_z"     default="0.0" />
+    <xacro:arg name="cam_roll"      default="0.0" />
+    <xacro:arg name="cam_pitch"     default="0.0" />
+    <xacro:arg name="cam_yaw"       default="0.0" />
+    <xacro:include
+        filename="$(find depthai_descriptions)/urdf/depthai_descr.urdf.xacro"/>
+
+    <joint name="camera_base_joint" type="fixed">
+      <origin xyz="0.048 0 0.365" rpy="0 0.36 0"/>
+      <parent link="cam_mount_link"/>
+      <child link="camera_base"/>
+    </joint>
+  </xacro:if>
+
 
   <joint name="thermal_joint" type="fixed">
     <origin xyz="0.18 0 0.06" rpy="0 0.1 0"/>
@@ -293,14 +329,6 @@ material.
                     tire_width="${rear_tire_width}"
                     wheel_mass="${rear_wheel_mass}"
                     axle_eff_limit="${rear_axle_eff_limit}"/>
-
-  <xacro:arg name="use_nominal_extrinsics" default="true"/>
-  <xacro:include filename="$(find realsense2_description)/urdf/_d455.urdf.xacro" />
-
-  <xacro:sensor_d455 parent="camera_base" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-  </xacro:sensor_d455>
-
 
   <gazebo>
     <plugin name="gazebo_ros_ackermann_drive"
