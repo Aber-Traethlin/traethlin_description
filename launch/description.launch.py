@@ -10,9 +10,18 @@ output_dest = "log"
 def generate_launch_description():
   pkg_traethlin_description = get_package_share_directory('traethlin_description')
 
-  traethlin_urdf = Command(['xacro', ' ', os.path.join(pkg_traethlin_description,
-                                                      'urdf',
-                                                      'traethlin.urdf.xacro')])
+  camera_type_ = LaunchConfiguration('camera_type')
+  camera_type_launch_arg = DeclareLaunchArgument(
+    'camera_type',
+    default_value='oak-d-s2',
+    description="Can be 'oak-d-s2' or 'd455' (realsense)"
+  )
+
+  traethlin_urdf = Command(['xacro', ' camera_type:=', camera_type_, ' ',
+                            os.path.join(pkg_traethlin_description,
+                                          'urdf',
+                                          'traethlin.urdf.xacro')])
+
   namespace_ = LaunchConfiguration('namespace')
   namespace_launch_arg = DeclareLaunchArgument(
     'namespace',
@@ -45,6 +54,7 @@ def generate_launch_description():
 
   return LaunchDescription([
     namespace_launch_arg,
+    camera_type_launch_arg,
 
     robot_state_publisher,
     joint_state_publisher,
