@@ -5,7 +5,7 @@ from launch.substitutions import Command, LaunchConfiguration
 from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
 
-output_dest = "log"
+output_dest = "screen"
 
 def generate_launch_description():
   pkg_traethlin_description = get_package_share_directory('traethlin_description')
