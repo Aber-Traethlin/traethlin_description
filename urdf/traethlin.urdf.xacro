@@ -55,11 +55,9 @@ material.
        outer_rad are the tube's inner and outer radii, respectively. Pitch
        MOI is calculated from platform calibration data using bifilar pendulum
        method
-
-       TODO: remove inner_rad
       -->
-  <xacro:macro name="thick_walled_tube_inertial"
-               params="inner_rad outer_rad height mass">
+  <xacro:macro name="cylinder_inertial"
+               params="outer_rad height mass">
     <inertial>
       <mass value="${mass}"/>
       <inertia
@@ -68,16 +66,9 @@ material.
         iyy="${(mass*(3*outer_rad*outer_rad+height*height))/12}"
         iyz = "0"
         izz="${(mass*outer_rad*outer_rad)/2}"/>
-      <!--ixx="${(1 / 12) * mass * (3 * (inner_rad * inner_rad +
-                    outer_rad * outer_rad) + height * height)}"
-               ixy="0" ixz="0"
-               iyy="0.0224048079"
-               iyz="0"
-               izz="${mass * (inner_rad * inner_rad +
-                    outer_rad * outer_rad) / 2}"-->
     </inertial>
   </xacro:macro>
-  <xacro:macro  name="thick_walled_tube_inertial"
+<!--  <xacro:macro  name="thick_walled_tube_inertial"
                 params="inner_rad outer_rad height mass">
     <inertial>
       <mass value="${mass}"/>
@@ -88,7 +79,7 @@ material.
         iyz = "0"
         izz="${mass*outer_rad/2}"/>
       </inertial>
-  </xacro:macro>
+  </xacro:macro>-->
   <xacro:macro name="solid_cube_inertial"
                params="x y z mass">
     <inertial>

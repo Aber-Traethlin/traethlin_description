@@ -91,8 +91,8 @@ material.
         </geometry>
       </collision>-->
 
-      <xacro:thick_walled_tube_inertial
-          inner_rad="${hub_dia / 2.0}" outer_rad="${tire_dia / 2.0}"
+      <xacro:cylinder_inertial
+          outer_rad="${tire_dia / 2.0}"
           height="${tire_width}" mass="${wheel_mass}"/>
 
 
