@@ -30,16 +30,33 @@ material.
       </camera>-->
       <plugin name="depth_camera" filename="libgazebo_ros_camera.so">
         <ros>
-          <remapping>/camera/image_raw:=/camera/color/image_raw</remapping>
-          <remapping>/camera/image_raw/compressed:=/camera/color/image_raw/compressed</remapping>
-          <remapping>/camera/image_raw/compressedDepth:=/camera/color/image_raw/compressedDepth</remapping>
-          <remapping>/camera/image_raw/theora:=/camera/color/image_raw/theora</remapping>
-          <remapping>/camera/camera_info:=/camera/color/camera_info</remapping>
-          <remapping>/camera/points:=/camera/depth/points</remapping>
-          <remapping>/camera/depth/image_raw:=/camera/depth/image_rect_raw</remapping>
-          <remapping>/camera/depth/image_raw/compressed:=/camera/depth/image_rect_raw/compressed</remapping>
-          <remapping>/camera/depth/image_raw/compressedDepth:=/camera/depth/image_rect_raw/compressedDepth</remapping>
-          <remapping>/camera/depth/image_raw/theora:=/camera/depth/image_rect_raw/theora</remapping>
+          <xacro:property name="cmp_camera_type" value="$(arg camera_type)"/>
+          <!-- realsense d455 camera -->
+          <xacro:if value="${cmp_camera_type == 'd455'}">
+            <remapping>/camera/image_raw:=/camera/color/image_raw</remapping>
+            <remapping>/camera/image_raw/compressed:=/camera/color/image_raw/compressed</remapping>
+            <remapping>/camera/image_raw/compressedDepth:=/camera/color/image_raw/compressedDepth</remapping>
+            <remapping>/camera/image_raw/theora:=/camera/color/image_raw/theora</remapping>
+            <remapping>/camera/camera_info:=/camera/color/camera_info</remapping>
+            <remapping>/camera/points:=/camera/depth/points</remapping>
+            <remapping>/camera/depth/image_raw:=/camera/depth/image_rect_raw</remapping>
+            <remapping>/camera/depth/image_raw/compressed:=/camera/depth/image_rect_raw/compressed</remapping>
+            <remapping>/camera/depth/image_raw/compressedDepth:=/camera/depth/image_rect_raw/compressedDepth</remapping>
+            <remapping>/camera/depth/image_raw/theora:=/camera/depth/image_rect_raw/theora</remapping>
+          </xacro:if>
+          <!-- oak-d camera -->
+          <xacro:if value="${cmp_camera_type == 'oak-d-s2'}">
+            <remapping>camera/image_raw:=oak/rgb/image_raw</remapping>
+            <remapping>camera/image_raw/compressed:=oak/rgb/image_raw/compressed</remapping>
+            <remapping>camera/image_raw/compressedDepth:=oak/rgb/image_raw/compressedDepth</remapping>
+            <remapping>camera/image_raw/theora:=oak/rgb/image_raw/theora</remapping>
+            <remapping>camera/camera_info:=oak/rgb/camera_info</remapping>
+            <remapping>camera/points:=oak/points</remapping>
+            <remapping>camera/depth/image_raw:=oak/stereo/image_raw</remapping>
+            <remapping>camera/depth/image_raw/compressed:=oak/stereo/image_raw/compressed</remapping>
+            <remapping>camera/depth/image_raw/compressedDepth:=oak/stereo/image_raw/compressedDepth</remapping>
+            <remapping>camera/depth/image_raw/theora:=oak/stereo/image_raw/theora</remapping>
+          </xacro:if>
         </ros>
         <camera_name>camera</camera_name>
         <frame_name>camera_depth_optical_frame</frame_name>
