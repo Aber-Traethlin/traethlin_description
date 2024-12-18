@@ -46,51 +46,34 @@ material.
     <inertial>
       <!-- <mass value="8e-3"/>
       <inertia ixx="8e-3" ixy="0" ixz="0" iyy="8e-3" iyz="0" izz="8e-3"/> -->
-      <mass value="0.05"/>
-      <inertia ixx="0.0005" ixy="0" ixz="0" iyy="0.0005" iyz="0" izz="0.0005"/>
+      <mass value="0.005"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </xacro:macro>
 
 
-  <!-- Inertia of a thick-walled cylindrical tube with open ends. Height is
-       measured along the z axis, which is the tube's axis. inner_rad and
-       outer_rad are the tube's inner and outer radii, respectively. Pitch
-       MOI is calculated from platform calibration data using bifilar pendulum
-       method
+  <!-- Inertia of a cylinder. Height is
+       measured along the z axis, which is the cylinder's axis.
+       outer_rad is the cylinder's outer radius.
       -->
-  <xacro:macro name="cylinder_inertial"
-               params="outer_rad height mass">
-    <inertial>
-      <mass value="${mass}"/>
-      <inertia
-        ixx="${(mass*(3*outer_rad*outer_rad+height*height))/12}"
-        ixy = "0"
-        ixz = "0"
-        iyy="${(mass*(3*outer_rad*outer_rad+height*height))/12}"
-        iyz = "0"
-        izz="${(mass*outer_rad*outer_rad)/2}"/>
-    </inertial>
-  </xacro:macro>
-  <!-- <xacro:macro  name="cylinder_inertial"
+  <xacro:macro  name="cylinder_inertial"
                 params="outer_rad height mass">
     <inertial>
       <mass value="${mass}"/>
       <inertia
         ixx="${(mass*(3*outer_rad*outer_rad+height*height))/12}"
-        ixy = "0"
-        ixz = "0"
+        ixy = "0" ixz = "0"
         iyy="${(mass*(3*outer_rad*outer_rad+height*height))/12}"
         iyz = "0"
         izz="${mass*outer_rad/2}"/>
       </inertial>
-  </xacro:macro> -->
+  </xacro:macro>
   <xacro:macro name="solid_cube_inertial"
                params="x y z mass">
     <inertial>
       <mass value="${mass}"/>
       <inertia ixx="${mass*(y*y+z*z)/12}"
-        ixy = "0"
-        ixz = "0"
+        ixy = "0" ixz = "0"
         iyy="${mass*(x*x+z*z)/12}"
         iyz = "0"
         izz="${mass*(x*x+y*y)/12}"/>
@@ -359,8 +342,8 @@ material.
       <linear_velocity_pid_gain>5 1 0</linear_velocity_pid_gain>
       <linear_velocity_i_range>0 0</linear_velocity_i_range>
       <!-- output -->
-      <publish_odom>true</publish_odom>
-      <publish_odom_tf>true</publish_odom_tf>
+      <publish_odom>false</publish_odom>
+      <publish_odom_tf>false</publish_odom_tf>
       <publish_wheel_tf>true</publish_wheel_tf>
       <publish_distance>true</publish_distance>
       <odometry_frame>odom</odometry_frame>
