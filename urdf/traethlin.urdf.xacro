@@ -342,8 +342,8 @@ material.
       <linear_velocity_pid_gain>5 1 0</linear_velocity_pid_gain>
       <linear_velocity_i_range>0 0</linear_velocity_i_range>
       <!-- output -->
-      <publish_odom>false</publish_odom>
-      <publish_odom_tf>false</publish_odom_tf>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
       <publish_wheel_tf>true</publish_wheel_tf>
       <publish_distance>true</publish_distance>
       <odometry_frame>odom</odometry_frame>
