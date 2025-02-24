@@ -37,7 +37,7 @@ def generate_launch_description():
       'robot_description': traethlin_urdf
       }],
     output={"both": output_dest},
-    arguments=['--ros-args', '--log-level', 'DEBUG'],
+    arguments=['--ros-args', '--log-level', 'INFO'],
     respawn=True
     )
 
@@ -48,7 +48,7 @@ def generate_launch_description():
     executable='joint_state_publisher',
     namespace=namespace_,
     output={"both": output_dest},
-    arguments=['--ros-args', '--log-level', 'DEBUG'],
+    arguments=['--ros-args', '--log-level', 'INFO'],
     respawn=True
     )
 
