@@ -84,18 +84,9 @@ material.
         </geometry>
       </collision>
 
-      <!--<collision name="collision">
-        <origin xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="${wheel_model}" scale="0.632 0.632 0.661"/>
-        </geometry>
-      </collision>-->
-
       <xacro:cylinder_inertial
-          outer_rad="${tire_dia / 2.0}"
+          outer_rad="${tire_dia/2}"
           height="${tire_width}" mass="${wheel_mass}"/>
-
-
 
     </link>
 
