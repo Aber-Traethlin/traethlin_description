@@ -39,7 +39,7 @@ material.
   <xacro:property name="chassis_length_offset" value="0.03"/>
   <xacro:property name="chassis_vertical_offset" value="0.04"/>
   <xacro:property name="chassis_mass" value="1.5"/> <!-- excluding batteries-->
-  <xacro:property name="chassis_cm_height" value="0.10"/>
+  <xacro:property name="chassis_cm_height" value="0.09"/>
   <xacro:property name="chassis_cm_to_rear_shock" value="0.155"/>
   <xacro:property name="chassis_cm_to_front_shock" value="0.155"/>
 

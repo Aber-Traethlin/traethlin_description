@@ -18,16 +18,14 @@ material.
   <gazebo reference="camera_base">
     <sensor type="depth" name="camera">
       <update_rate>6.0</update_rate>
-      <!--<camera name="gazebo_camera">
-        <distortion>
-          <k1>0.1</k1>
-          <k2>0.2</k2>
-          <k3>0.3</k3>
-          <p1>0.4</p1>
-          <p2>0.5</p2>
-          <center>0.5 0.5</center>
-        </distortion>
-      </camera>-->
+      <camera name="camera">
+        <horizontal_fov>1.25664</horizontal_fov>
+        <!--<vertical_fov>0.855211</vertical_fov>-->
+        <image>
+          <width>320</width>
+          <height>180</height>
+        </image>
+      </camera>
       <plugin name="depth_camera" filename="libgazebo_ros_camera.so">
         <ros>
           <xacro:property name="cmp_camera_type" value="$(arg camera_type)"/>
@@ -63,7 +61,7 @@ material.
         <hack_baseline>0.095</hack_baseline>
         <min_depth>0.04</min_depth>
         <max_depth>10.0</max_depth>
-        <hfov>87</hfov>
+        <!--<hfov>87</hfov>-->
       </plugin>
     </sensor>
   </gazebo>

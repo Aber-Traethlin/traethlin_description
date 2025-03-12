@@ -150,7 +150,7 @@ material.
   </link>
 
   <joint name="box_of_goodies_to_chassis_joint" type="fixed">
-    <origin xyz="-0.108 0 0.115" rpy="0 0 0"/>
+    <origin xyz="-0.105 0 0.115" rpy="0 0 0"/>
     <parent link="chassis_link"/>
     <child link="box_of_goodies_link"/>
   </joint>
@@ -212,7 +212,7 @@ material.
   </gazebo>
 
   <joint name="cam_mount_joint" type="fixed">
-    <origin xyz="-0.206 0 0.04" rpy="0 0 0"/>
+    <origin xyz="-0.206 0 0.025" rpy="0 0 0"/>
     <parent link="chassis_link"/>
     <child link="cam_mount_link"/>
   </joint>
@@ -234,7 +234,7 @@ material.
     </xacro:sensor_d455>
 
     <joint name="camera_base_joint" type="fixed">
-      <origin xyz="0.03 0 0.358" rpy="0 0.36 0"/>
+      <origin xyz="0.05 0 0.39" rpy="0 0.36 0"/>
       <parent link="cam_mount_link"/>
       <child link="camera_base"/>
     </joint>
