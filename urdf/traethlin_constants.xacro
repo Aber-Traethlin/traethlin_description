@@ -43,25 +43,25 @@ material.
   <xacro:property name="chassis_cm_to_rear_shock" value="0.155"/>
   <xacro:property name="chassis_cm_to_front_shock" value="0.155"/>
 
-  <!-- hub_dia and tire_dia are the diameters of the hub and tire,
+  <!-- hub_dia and tyre_dia are the diameters of the hub and tyre,
        respectively. hex_hub_depth is the distance that the hex hub is
-       inset from the outer edge of the tire. It is set so that each wheel
-       is a "zero offset" wheel. hex_hub_depth = tire_width / 2 -
+       inset from the outer edge of the tyre. It is set so that each wheel
+       is a "zero offset" wheel. hex_hub_depth = tyre_width / 2 -
        axle_length. -->
   <!--<xacro:property name="hub_dia" value="0.024"/>
-  <xacro:property name="tire_dia" value="0.19"/>
-  <xacro:property name="front_tire_width" value="0.072644"/>
+  <xacro:property name="tyre_dia" value="0.19"/>
+  <xacro:property name="front_tyre_width" value="0.072644"/>
   <xacro:property name="front_wheel_mass" value="0.82"/>
-  <xacro:property name="rear_tire_width" value="0.0762"/>
+  <xacro:property name="rear_tyre_width" value="0.0762"/>
   <xacro:property name="rear_wheel_mass" value="0.89"/>-->
 
 
   <xacro:property name="hub_dia" value="0.015"/>
-  <xacro:property name="tire_dia" value="0.110"/>
+  <xacro:property name="tyre_dia" value="0.110"/>
   <!-- <xacro:property name="hex_hub_depth" value="0.0"/>  -->
-  <xacro:property name="front_tire_width" value="0.07"/>
+  <xacro:property name="front_tyre_width" value="0.07"/>
   <xacro:property name="front_wheel_mass" value="0.115"/><!--0.115-->
-  <xacro:property name="rear_tire_width" value="0.07"/>
+  <xacro:property name="rear_tyre_width" value="0.07"/>
   <xacro:property name="rear_wheel_mass" value="0.115"/>
 
   <!-- hex_hub_dist is the distance between left and right hex hubs when
@@ -122,7 +122,7 @@ material.
          5.12766 N m
 
        max_speed = 60mph = 26.82 m/s
-       axle_vel_limit = (2 * pi) * (max_speed / (pi * tire_dia)) =
+       axle_vel_limit = (2 * pi) * (max_speed / (pi * tyre_dia)) =
           2*26.82/0.19 = 282.315789474 rad/s
        -->
   <xacro:property name="front_axle_eff_limit" value="20000"/>

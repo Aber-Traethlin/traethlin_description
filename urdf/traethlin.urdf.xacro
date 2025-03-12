@@ -290,22 +290,22 @@ material.
   <!-- Wheels -->
   <xacro:front_wheel lr_prefix="left" fr_prefix="front"
                      lr_reflect="1" fr_reflect="1"
-                     tire_width="${front_tire_width}"
+                     tyre_width="${front_tyre_width}"
                      wheel_mass="${front_wheel_mass}"
                      axle_eff_limit="${front_axle_eff_limit}"/>
   <xacro:front_wheel lr_prefix="right" fr_prefix="front"
                      lr_reflect="-1" fr_reflect="1"
-                     tire_width="${front_tire_width}"
+                     tyre_width="${front_tyre_width}"
                      wheel_mass="${front_wheel_mass}"
                      axle_eff_limit="${front_axle_eff_limit}"/>
   <xacro:rear_wheel lr_prefix="left" fr_prefix="rear"
                     lr_reflect="1" fr_reflect="-1"
-                    tire_width="${rear_tire_width}"
+                    tyre_width="${rear_tyre_width}"
                     wheel_mass="${rear_wheel_mass}"
                     axle_eff_limit="${rear_axle_eff_limit}"/>
   <xacro:rear_wheel lr_prefix="right" fr_prefix="rear"
                     lr_reflect="-1" fr_reflect="-1"
-                    tire_width="${rear_tire_width}"
+                    tyre_width="${rear_tyre_width}"
                     wheel_mass="${rear_wheel_mass}"
                     axle_eff_limit="${rear_axle_eff_limit}"/>
 

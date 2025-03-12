@@ -16,7 +16,7 @@ material.
 -->
 <robot name="traethlin" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- The "wheel" macro defines an axle carrier, axle, and wheel. -->
-  <xacro:macro name="wheel" params="lr_prefix fr_prefix lr_reflect tire_width wheel_mass axle_eff_limit wheel_model cant">
+  <xacro:macro name="wheel" params="lr_prefix fr_prefix lr_reflect tyre_width wheel_mass axle_eff_limit wheel_model cant">
     <link name="${lr_prefix}_${fr_prefix}_axle_carrier">
       <xacro:null_inertial/>
     </link>
@@ -73,20 +73,20 @@ material.
         </geometry>
 -->
         <geometry>
-          <cylinder radius="${tire_dia/2}" length="${tire_width}"/>
+          <cylinder radius="${tyre_dia/2}" length="${tyre_width}"/>
         </geometry>
         <material name="black"/>
       </visual>
       <collision name="collision">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="${tire_dia/2}" length="${tire_width}"/>
+          <cylinder radius="${tyre_dia/2}" length="${tyre_width}"/>
         </geometry>
       </collision>
 
       <xacro:cylinder_inertial
-          outer_rad="${tire_dia/2}"
-          height="${tire_width}" mass="${wheel_mass}"/>
+          outer_rad="${tyre_dia/2}"
+          height="${tyre_width}" mass="${wheel_mass}"/>
 
     </link>
 
@@ -112,7 +112,7 @@ material.
 
   <!-- Front wheel -->
   <xacro:macro name="front_wheel"
-               params="lr_prefix fr_prefix lr_reflect fr_reflect tire_width
+               params="lr_prefix fr_prefix lr_reflect fr_reflect tyre_width
                        wheel_mass axle_eff_limit">
     <xacro:front_shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                        lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}"
@@ -147,7 +147,7 @@ material.
     </transmission>
 
     <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
-                 lr_reflect="${lr_reflect}" tire_width="${tire_width}"
+                 lr_reflect="${lr_reflect}" tyre_width="${tyre_width}"
                  wheel_mass="${wheel_mass}"
                  axle_eff_limit="${axle_eff_limit}"
                  wheel_model="file://$(find traethlin_description)/meshes/wheel.stl"
@@ -156,13 +156,13 @@ material.
 
   <!-- Rear wheel -->
   <xacro:macro name="rear_wheel"
-               params="lr_prefix fr_prefix lr_reflect fr_reflect tire_width
+               params="lr_prefix fr_prefix lr_reflect fr_reflect tyre_width
                        wheel_mass axle_eff_limit">
     <xacro:rear_shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}"
                  child="${lr_prefix}_${fr_prefix}_axle_carrier"/>
     <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
-                 lr_reflect="${lr_reflect}" tire_width="${tire_width}"
+                 lr_reflect="${lr_reflect}" tyre_width="${tyre_width}"
                  wheel_mass="${wheel_mass}"
                  axle_eff_limit="${axle_eff_limit}"
                  wheel_model="file://$(find traethlin_description)/meshes/wheel.stl"
