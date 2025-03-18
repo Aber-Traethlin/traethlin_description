@@ -65,7 +65,9 @@ material.
         ixy = "0" ixz = "0"
         iyy="${(mass*(3*outer_rad*outer_rad+height*height))/12}"
         iyz = "0"
-        izz="${mass*outer_rad*outer_rad/2}"/>
+        izz="${mass*outer_rad/2}"/>
+      <!-- izz above should have the outer_rad squared, but this makes the robot
+      explode as soon as it moves. -->
       </inertial>
   </xacro:macro>
   <xacro:macro name="solid_cube_inertial"
