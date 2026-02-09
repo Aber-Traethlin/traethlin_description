@@ -16,8 +16,9 @@ material.
 -->
 <robot name="traethlin" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <gazebo reference="camera_base">
-    <sensor type="depth" name="camera">
+    <sensor type="rgbd_camera" name="camera">
       <update_rate>6.0</update_rate>
+      <topic>camera</topic>
       <camera name="camera">
         <horizontal_fov>1.25664</horizontal_fov>
         <!--<vertical_fov>0.855211</vertical_fov>-->
@@ -26,7 +27,8 @@ material.
           <height>180</height>
         </image>
       </camera>
-      <plugin name="depth_camera" filename="libgazebo_ros_camera.so">
+      <gz_frame_id>camera_base</gz_frame_id>
+      <!--      <plugin name="depth_camera" filename="libgazebo_ros_camera.so">-->
         <ros>
           <xacro:property name="cmp_camera_type" value="$(arg camera_type)"/>
           <!-- realsense d455 camera -->
@@ -62,16 +64,17 @@ material.
         <min_depth>0.04</min_depth>
         <max_depth>10.0</max_depth>
         <!--<hfov>87</hfov>-->
-      </plugin>
+        <!--</plugin>-->
     </sensor>
   </gazebo>
 
   <gazebo reference="gps_link">
-    <material>Gazebo/Black</material>
-    <sensor name="gps" type="gps">
+    <material><xacro:gazebo_black/></material>
+    <sensor name="navsat" type="navsat">
+      <gz_frame_id>gps_link</gz_frame_id>
       <always_on>true</always_on>
       <update_rate>5</update_rate>
-      <gps>
+      <navsat>
         <position_sensing>
           <horizontal>
             <noise type="gaussian">
@@ -86,130 +89,47 @@ material.
             </noise>
           </vertical>
         </position_sensing>
-      </gps>
-      <plugin name="gps_plugin" filename="libgazebo_ros_gps_sensor.so">
-        <ros>
-          <!-- <namespace>/traethlin</namespace> -->
-          <remapping>~/out:=gps/fix</remapping>
-          <remapping>~/vel:=gps/vel</remapping>
-          <frame_name>imu_link</frame_name>
-        </ros>
-      </plugin>
+      </navsat>
     </sensor>
   </gazebo>
 
   <gazebo reference="imu_link">
-    <sensor name="imu" type="imu">
-      <always_on>true</always_on>
-      <update_rate>100</update_rate>
-      <imu>
-        <angular_velocity>
-          <x>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-4</stddev>
-            </noise>
-          </x>
-          <y>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-4</stddev>
-            </noise>
-          </y>
-          <z>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>2e-4</stddev>
-            </noise>
-          </z>
-        </angular_velocity>
-        <linear_acceleration>
-          <x>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>1.7e-2</stddev>
-            </noise>
-          </x>
-          <y>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>1.7e-2</stddev>
-            </noise>
-          </y>
-          <z>
-            <noise type="gaussian">
-              <mean>0.0</mean>
-              <stddev>1.7e-2</stddev>
-            </noise>
-          </z>
-        </linear_acceleration>
-      </imu>
-      <initial_orientation_as_reference>false</initial_orientation_as_reference>
-      <plugin name="imu" filename="libgazebo_ros_imu_sensor.so">
-        <ros>
-          <!-- <namespace>/traethlin</namespace> -->
-          <remapping>~/out:=imu/data</remapping>
-          <frame_name>imu_link</frame_name>
-        </ros>
-      </plugin>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>1</always_on>
+      <update_rate>1</update_rate>
+      <visualize>true</visualize>
+      <topic>imu</topic>
+      <gz_frame_id>imu_link</gz_frame_id>
     </sensor>
   </gazebo>
 
   <gazebo reference="thermal_link">
-    <material>Gazebo/White</material>
-    <sensor type="camera" name="thermal_camera">
+    <material><xacro:gazebo_white/></material>
+    <sensor type="thermal" name="thermal_camera">
+      <topic>thermal_camera/image</topic>
       <camera name="thermal_camera">
         <horizontal_fov>1.92</horizontal_fov>
+        <!--
         <vertical_fov>1.31</vertical_fov>
+        -->
         <image>
           <width>16</width>
           <height>12</height>
+          <format>L8</format>
         </image>
       </camera>
-
-      <plugin name="thermal_camera" filename="libgazebo_ros_camera.so">
-        <ros>
-          <!-- <namespace>traethlin</namespace> -->
-<!--          <remapping>~/image_raw:=thermal_image</remapping>
-          <remapping>~/camera_info:=thermal_info</remapping>
-          -->
-          </ros>
-
-        <frame_name>thermal_link</frame_name>
-
-        <hack_baseline>0.07</hack_baseline>
-      </plugin>
-    </sensor>
-  </gazebo>
-
-  <!--
-  <gazebo reference="lidar">
-    <sensor name="sensor_ray" type="ray">
-      <pose>0.5 0 0 0 0 0</pose>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>200</samples>
-            <resolution>1.0</resolution>
-            <min_angle>-0.74</min_angle>
-            <max_angle>0.74</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.04</min>
-          <max>10.0</max>
-        </range>
-      </ray>
-      <always_on>true</always_on>
       <visualize>true</visualize>
-      <update_rate>100.0</update_rate>
-      <plugin name="laser" filename="libgazebo_ros_ray_sensor.so">
-        <ros>
-          <remapping>laser/out:=laser_scan</remapping>
-        </ros>
-        <output_type>sensor_msgs/LaserScan</output_type>
+      <plugin
+          filename="ignition-gazebo-thermal-sensor-system"
+          name="gz::sim::systems::ThermalSensor">
+        <min_temp>200.0</min_temp>
+        <max_temp>300.0</max_temp>
+        <resolution>10</resolution>
       </plugin>
+
+      <frame_name>thermal_link</frame_name>
+
     </sensor>
   </gazebo>
-  -->
+
 </robot>

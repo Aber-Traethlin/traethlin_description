@@ -91,7 +91,7 @@ material.
     </link>
 
     <gazebo reference="${lr_prefix}_${fr_prefix}_wheel">
-      <material>Gazebo/Black</material>
+      <material><xacro:gazebo_black/></material>
       <mu1>10</mu1>
       <mu2>10</mu2>
     </gazebo>

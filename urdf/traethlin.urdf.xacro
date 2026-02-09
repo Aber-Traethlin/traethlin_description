@@ -19,11 +19,6 @@ material.
   <xacro:arg name="camera_type" default="oak-d-s2" />
   <!-- Possible values are 'oak-d-s2' or 'd455' -->
 
-  <xacro:include filename="$(find traethlin_description)/urdf/traethlin_constants.xacro" />
-  <xacro:include filename="$(find traethlin_description)/urdf/traethlin_shock_absorbers.xacro" />
-  <xacro:include filename="$(find traethlin_description)/urdf/traethlin_wheels.xacro" />
-  <xacro:include filename="$(find traethlin_description)/urdf/traethlin.gazebo.xacro" />
-
   <material name="black">
     <color rgba="0.0 0.0 0.0 1"/>
   </material>
@@ -39,6 +34,24 @@ material.
   <material name="off_white">
     <color rgba="0.9 0.9 0.5 1"/>
   </material>
+
+  <!-- Gazebo colours -->
+  <!-- These are to be used inside a <material> tag in a <agzebo> tag. -->
+  <xacro:macro name="gazebo_black">
+    <ambient>0.0 0.0 0.0 1</ambient>
+    <diffuse>0.0 0.0 0.0 1</diffuse>
+    <specular>0.0 0.0 0.0 1</specular>
+  </xacro:macro>
+  <xacro:macro name="gazebo_white">
+    <ambient>1.0 1.0 1.0 1</ambient>
+    <diffuse>1.0 1.0 1.0 1</diffuse>
+    <specular>1.0 1.0 1.0 1</specular>
+  </xacro:macro>
+  <xacro:macro name="gazebo_grey">
+    <ambient>0.3 0.3 0.3 1</ambient>
+    <diffuse>0.7 0.7 0.7 1</diffuse>
+    <specular>0.01 0.01 0.01 1</specular>
+  </xacro:macro>
 
   <!-- Null inertial element. This is needed to make the model work with
        Gazebo. -->
@@ -65,7 +78,7 @@ material.
         ixy = "0" ixz = "0"
         iyy="${(mass*(3*outer_rad*outer_rad+height*height))/12}"
         iyz = "0"
-        izz="${mass*outer_rad/2}"/>
+        izz="${mass*outer_rad*outer_rad/2}"/>
       <!-- izz above should have the outer_rad squared, but this makes the robot
       explode as soon as it moves. -->
       </inertial>
@@ -82,11 +95,17 @@ material.
     </inertial>
   </xacro:macro>
 
+  <xacro:include filename="$(find traethlin_description)/urdf/traethlin_constants.xacro" />
+  <xacro:include filename="$(find traethlin_description)/urdf/traethlin_shock_absorbers.xacro" />
+  <xacro:include filename="$(find traethlin_description)/urdf/traethlin_wheels.xacro" />
+  <xacro:include filename="$(find traethlin_description)/urdf/traethlin.gazebo.xacro" />
+
+
   <link name="base_link">
   </link>
 
   <gazebo reference="base_link">
-    <material>Gazebo/Grey</material>
+    <material><xacro:gazebo_grey/></material>
   </gazebo>
 
   <!-- Chassis -->
@@ -122,7 +141,11 @@ material.
       mass="${chassis_mass}"/>
   </link>
   <gazebo reference="chassis_link">
-    <material>Gazebo/DarkGrey</material>
+    <material>
+      <ambient>0.175 0.175 0.175 1</ambient>
+      <diffuse>0.175 0.175 0.175 1</diffuse>
+      <specular>0.175 0.175 0.175 1</specular>
+    </material>
     <mu1>0.2</mu1>
     <mu2>0.2</mu2>
   </gazebo>
@@ -210,7 +233,11 @@ material.
   </link>
 
   <gazebo reference="cam_mount_link">
-    <material>Gazebo/Orange</material>
+    <material>
+      <ambient>1.0 0.5 0.005 1</ambient>
+      <diffuse>1.0 0.5 0.005 1</diffuse>
+      <specular>1.0 0.5 0.005 1</specular>
+    </material>
   </gazebo>
 
   <joint name="cam_mount_joint" type="fixed">
@@ -312,44 +339,36 @@ material.
                     axle_eff_limit="${rear_axle_eff_limit}"/>
 
   <gazebo>
-    <plugin name="gazebo_ros_ackermann_drive"
-            filename="libgazebo_ros_ackermann_drive_4wd.so">
-      <ros>
-        <!-- <namespace>traethlin</namespace> -->
-        <remapping>cmd_vel:=cmd_vel</remapping>
-        <remapping>odom:=odom</remapping>
-        <remapping>distance:=distance</remapping>
-      </ros>
-      <update_rate>100.0</update_rate>
-      <!-- wheels -->
-      <front_left_joint>left_front_axle</front_left_joint>
-      <front_right_joint>right_front_axle</front_right_joint>
-      <rear_left_joint>left_rear_axle</rear_left_joint>
-      <rear_right_joint>right_rear_axle</rear_right_joint>
+
+    <plugin
+      filename="gz-sim-ackermann-steering-system"
+      name="gz::sim::systems::AckermannSteering">
+      <left_joint>left_front_axle</left_joint>
+      <left_joint>left_rear_axle</left_joint>
+      <right_joint>right_front_axle</right_joint>
+      <right_joint>right_rear_axle</right_joint>
       <left_steering_joint>left_steering_joint</left_steering_joint>
       <right_steering_joint>right_steering_joint</right_steering_joint>
-      <steering_wheel_joint></steering_wheel_joint>
-      <!-- Max absolute steer angle for tyre in radians-->
-      <!-- Any cmd_vel angular z greater than this would be capped -->
-      <max_steer>0.7</max_steer>
-      <!-- Max absolute steering angle of steering wheel -->
-      <max_steering_angle>7.85</max_steering_angle>
-      <!-- Max absolute linear speed in m/s -->
-      <max_speed>1.5</max_speed>
-      <!-- PID tuning -->
-      <left_steering_pid_gain>100 20 1</left_steering_pid_gain>
-      <left_steering_i_range>0 0</left_steering_i_range>
-      <right_steering_pid_gain>100 20 1</right_steering_pid_gain>
-      <right_steering_i_range>0 0</right_steering_i_range>
-      <linear_velocity_pid_gain>5 1 0</linear_velocity_pid_gain>
-      <linear_velocity_i_range>0 0</linear_velocity_i_range>
-      <!-- output -->
-      <publish_odom>true</publish_odom>
-      <publish_odom_tf>true</publish_odom_tf>
-      <publish_wheel_tf>true</publish_wheel_tf>
-      <publish_distance>true</publish_distance>
-      <odometry_frame>odom</odometry_frame>
-      <robot_base_frame>base_link</robot_base_frame>
+      <kingpin_width>${hex_hub_dist}</kingpin_width>
+      <steering_limit>0.7</steering_limit>
+      <wheel_base>${wheelbase_front+wheelbase_rear}</wheel_base>
+      <wheel_separation>${hex_hub_dist}</wheel_separation>
+      <wheel_radius>${tyre_dia/2.0}</wheel_radius>
+      <min_velocity>-1</min_velocity>
+      <max_velocity>1.5</max_velocity>
+      <min_acceleration>-3</min_acceleration>
+      <max_acceleration>3</max_acceleration>
+
+      <odom_topic>odom</odom_topic>
+      <tf_topic>/tf</tf_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_link</child_frame_id>
+    </plugin>
+
+    <plugin
+      filename="gz-sim-joint-state-publisher-system"
+      name="gz::sim::systems::JointStatePublisher">
+      <topic>joint_states</topic>
     </plugin>
   </gazebo>
 </robot>
