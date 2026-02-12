@@ -244,9 +244,9 @@ material.
 
   <!-- oak-d camera -->
   <xacro:if value="${cmp_camera_type == 'oak-d-s2'}">
-    <xacro:arg name="camera_name"   default="oak" />
+    <xacro:arg name="camera_name"   default="camera" />
     <xacro:arg name="camera_model"  default="OAK-D-S2" />
-    <!--    <xacro:arg name="base_frame"    default="oak-d_frame" />-->
+    <xacro:arg name="base_frame"    default="camera" />
     <xacro:arg name="parent_frame"  default="camera_base" />
     <xacro:arg name="cam_pos_x"     default="0.0" />
     <xacro:arg name="cam_pos_y"     default="0.0" />
