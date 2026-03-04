@@ -71,6 +71,7 @@ material.
   <gazebo reference="gps_link">
     <material><xacro:gazebo_black/></material>
     <sensor name="navsat" type="navsat">
+      <topic>/gps/fix</topic>
       <gz_frame_id>gps_link</gz_frame_id>
       <always_on>true</always_on>
       <update_rate>5</update_rate>
