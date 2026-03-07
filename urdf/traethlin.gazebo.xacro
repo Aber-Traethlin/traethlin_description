@@ -99,7 +99,7 @@ material.
       <always_on>1</always_on>
       <update_rate>1</update_rate>
       <visualize>true</visualize>
-      <topic>imu</topic>
+      <topic>/imu/data</topic>
       <gz_frame_id>imu_link</gz_frame_id>
     </sensor>
   </gazebo>
