@@ -19,6 +19,8 @@ material.
   <xacro:arg name="camera_type" default="oak-d-s2" />
   <!-- Possible values are 'oak-d-s2' or 'd455' -->
 
+  <xacro:arg name="gazebo_major_version" default="8" />
+
   <material name="black">
     <color rgba="0.0 0.0 0.0 1"/>
   </material>

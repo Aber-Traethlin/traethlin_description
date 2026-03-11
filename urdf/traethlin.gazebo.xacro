@@ -120,13 +120,25 @@ material.
         </image>
       </camera>
       <visualize>true</visualize>
-      <plugin
-          filename="ignition-gazebo-thermal-sensor-system"
-          name="gz::sim::systems::ThermalSensor">
-        <min_temp>200.0</min_temp>
-        <max_temp>300.0</max_temp>
-        <resolution>10</resolution>
-      </plugin>
+      <xacro:property name="cmp_gazebo_major_version"
+                      value="$(arg gazebo_major_version)"/>
+      <xacro:if value="${cmp_gazebo_major_version == 8}">
+        <plugin filename="ignition-gazebo-thermal-sensor-system"
+                name="gz::sim::systems::ThermalSensor">
+          <min_temp>200.0</min_temp>
+          <max_temp>300.0</max_temp>
+          <resolution>10</resolution>
+        </plugin>
+      </xacro:if>
+      <xacro:if value="${cmp_gazebo_major_version == 6}">
+        <!-- For now we only have versions 6 and 8.  6 will disappear eventually-->
+        <plugin filename="ignition-gazebo-thermal-system"
+                name="gz::sim::systems::Thermal">
+          <min_temp>200.0</min_temp>
+          <max_temp>300.0</max_temp>
+          <resolution>10</resolution>
+        </plugin>
+      </xacro:if>
 
       <frame_name>thermal_link</frame_name>
 
