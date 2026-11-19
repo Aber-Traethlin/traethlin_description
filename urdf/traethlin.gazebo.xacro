@@ -140,9 +140,7 @@ material.
           <resolution>10</resolution>
         </plugin>
       </xacro:if>
-
-      <frame_name>thermal_link</frame_name>
-
+      <gz_frame_id>thermal_link</gz_frame_id>
     </sensor>
   </gazebo>
 
